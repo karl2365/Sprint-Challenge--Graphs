@@ -30,6 +30,54 @@ player = Player(world.starting_room)
 traversal_path = []
 
 
+def move_me(direction):
+
+    player.travel(direction)
+    traversal_path.append(direction)
+
+
+def dft(visited=None, prev=None, moves=None, p=player):
+
+
+    print(visited)
+    # Initialize our current position
+    current = p.current_room.id
+    # Get neighbors
+    neighbors = p.current_room.get_exits()
+    # Directional map
+    reverse_dir = {'s': 'n', 'n': 's', 'w': 'e', 'e': 'w'}
+
+    # # If visited is None, initialize to an empty dict
+    # # so we can recurse with visited
+    if not visited:
+        visited = {}
+
+    # If it's a new room, initialize an empty dictionary at that room
+    if current not in visited:
+        visited[current] = {}
+
+    # If we can move, update the current room
+    if moves:
+        visited[prev][moves] = current
+
+    if prev:
+        visited[current][reverse_dir[moves]] = prev
+
+    if len(visited[current]) < len(neighbors):
+        for direction in neighbors:
+            if direction not in visited[current]:
+                move_me(direction)
+                dft(visited, prev=current, moves=direction)
+
+    if len(visited) < len(room_graph):
+        direction = reverse_dir[moves]
+        move_me(direction)
+
+    # print(visited.keys())
+
+
+dft()
+
 
 # TRAVERSAL TEST
 visited_rooms = set()

@@ -16,7 +16,7 @@ To solve this path, you'll want to construct your own traversal graph. You start
 
 ```
 {
-  0: {'n': '?', 's': '?', 'w': '?', 'e': '?'}
+   0: {'n': '?', 's': '?', 'w': '?', 'e': '?'}
 }
 ```
 
